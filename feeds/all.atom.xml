@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>lucky abby</title><link href="http://moby5.github.io/" rel="alternate"></link><link href="http://moby5.github.io/feeds/all.atom.xml" rel="self"></link><id>http://moby5.github.io/</id><updated>2017-05-18T21:00:00+08:00</updated><entry><title>pelican 使用</title><link href="http://moby5.github.io/pelican-blog.html" rel="alternate"></link><published>2017-05-18T21:00:00+08:00</published><updated>2017-05-18T21:00:00+08:00</updated><author><name>abby</name></author><id>tag:moby5.github.io,2017-05-18:pelican-blog.html</id><summary type="html">&lt;p&gt;用pelican在github上创建自己的博客! &lt;a href="http://www.tuicool.com/articles/6ZfEBrQ"&gt;&lt;/a&gt;
+This is just a test post, and I'll try to write one every 2 days. The more the better.
+how to use pelican? &lt;a href="http://www.cnblogs.com/xueweihan/p/5249715.html"&gt;pelican使用&lt;/a&gt;&lt;/p&gt;</summary><category term="pelican python blog"></category></entry><entry><title>tfidf关键词抽取</title><link href="http://moby5.github.io/gen-keywords.html" rel="alternate"></link><published>2017-05-16T20:00:00+08:00</published><updated>2017-05-16T20:00:00+08:00</updated><author><name>jkmiao</name></author><id>tag:moby5.github.io,2017-05-16:gen-keywords.html</id><summary type="html">&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;针对一篇文档进行关键词抽取的场景经常会碰到，在此备记一个简单利用jieba库进行关键词抽取的方法，抛砖引玉。
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;安装&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    pip install jieba --user_keywords.txt
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;使用&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="sb"&gt;``&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;jieba&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;re&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;jieba&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;analyse&lt;/span&gt;
+
+&lt;span class="c1"&gt;# 载入自定义词典&lt;/span&gt;
+&lt;span class="n"&gt;jieba&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;load_userdict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;data/user_keywords.txt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;# 载入停用词&lt;/span&gt;
+&lt;span class="n"&gt;analyse&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_stop_words&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;data/stop_words.txt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;# tfidf获取关键词&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;get_keywords&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;topK&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="sd"&gt;    :type text: str&lt;/span&gt;
+&lt;span class="sd"&gt;    :type topK int: 默认抽取个数&lt;/span&gt;
+&lt;span class="sd"&gt;    :rtype : str&lt;/span&gt;
+&lt;span class="sd"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class="n"&gt;key_words&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;analyse&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;extract_tags&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;topK&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;topK&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="c1"&gt;# 过滤掉纯数字&lt;/span&gt;
+    &lt;span class="n"&gt;key_words&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;search&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;\d+&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;key_words&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; &amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key_words&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="sb"&gt;``&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This is my 2nd post, and I'll try to write one every 2 days. The more the better.&lt;/p&gt;</summary><category term="jieba keywords tfidf"></category></entry><entry><title>my first post</title><link href="http://moby5.github.io/hello.html" rel="alternate"></link><published>2017-05-08T20:00:00+08:00</published><updated>2017-05-08T20:00:00+08:00</updated><author><name>Abby</name></author><id>tag:moby5.github.io,2017-05-08:hello.html</id><summary type="html">&lt;p&gt;This is my first post, and I'll try to write one every 2 days. The more the better.&lt;/p&gt;</summary><category term="python firsts"></category></entry></feed>
